@@ -10,9 +10,14 @@ document.addEventListener('DOMContentLoaded', () => {
         todosContainer.style.width = taskList.children.length > 0 ? '100%' : '50%';
     }
 
-    const addTask = (event) => {
-        event.preventDefault();
-        const taskText = taskInput.value.trim();
+    const todoForm = document.querySelector('#todo-form');
+    todoForm.addEventListener('submit', (s) => {
+        s.preventDefault();
+        addTask();
+    })
+
+    const addTask = (text, completed = false) => {
+        const taskText = text || taskInput.value.trim();
         if (!taskText) {
             return;
         }
@@ -67,10 +72,11 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleEmptyImage();
     };
 
-    addTaskBtn.addEventListener('click', addTask)
+    addTaskBtn.addEventListener('click', () => addTask());
     taskInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
-            addTask(e);
+        e.preventDefault();
+            addTask();
         }
     });
 
